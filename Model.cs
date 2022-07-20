@@ -63,5 +63,10 @@ namespace CodeFirst
         public string Comment { get; set; }
         public int InspectionId { get; set; }
         public virtual Inspection Inspection { get; set; }
+
+        public override string ToString()
+        {
+            return RemarkStr + ", " + DateOfFix + ", " + Comment;
+        }
     }
 }

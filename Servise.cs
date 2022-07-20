@@ -118,5 +118,67 @@ namespace CodeFirst
             }
         }
 
+        public void DeleteRemark(Remark remark)
+        {
+            using (MyContext db = new MyContext())
+            {
+                db.Inspections.Find(remark.InspectionId).NumberOfRemarks--;
+
+                List<Remark> remarks = db.Remarks.Where<Remark>(i => i.RemarkId == remark.RemarkId).ToList();
+                db.Remarks.Remove(remarks[0]);
+                db.SaveChanges();
+            }
+        }
+
+        public void EditInspection(Inspection inspection)
+        {
+            using (MyContext db = new MyContext())
+            {
+                Inspection insp = db.Inspections.Find(inspection.InspectionId);
+
+                insp.InspectionName = inspection.InspectionName;
+                insp.Date = inspection.Date;
+                insp.InspectorId = inspection.InspectionId;
+                insp.InspectorName = inspection.InspectorName;
+                insp.Comment = inspection.Comment;
+
+                db.SaveChanges();
+            }
+        }
+
+        public void EditRemark(Remark remark)
+        {
+            using (MyContext db = new MyContext())
+            {
+                Remark rem = db.Remarks.Find(remark.RemarkId);
+
+                rem.RemarkStr = remark.RemarkStr;
+                rem.DateOfFix = remark.DateOfFix;
+                rem.Comment = remark.Comment;
+
+                db.SaveChanges();
+            }
+        }
+
+        public void EditInspector(Inspector inspector)
+        {
+            using (MyContext db = new MyContext())
+            {
+                Inspector insp = db.Inspectors.Find(inspector.InspectorId);
+
+                insp.InspectorNumber = inspector.InspectorNumber;
+                insp.InspectorName = inspector.InspectorName;
+
+                List<Inspection> inspections = db.Inspections.Where<Inspection>(i => i.InspectorId == inspector.InspectorId).ToList();
+
+                for(int i = 0; i < inspections.Count; i++)
+                {
+                    inspections[i].InspectorName = inspector.ToString();
+                }
+
+                db.SaveChanges();
+            }
+        }
+
     }
 }

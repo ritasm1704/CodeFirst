@@ -18,7 +18,7 @@ namespace CodeFirst
 
         public MyContext()
         {
-            Database.SetInitializer<MyContext>(new DropCreateDatabaseAlways<MyContext>());
+            Database.SetInitializer<MyContext>(new CreateDatabaseIfNotExists<MyContext>());
         }
         
     }
